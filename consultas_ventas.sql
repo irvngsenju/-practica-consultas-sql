@@ -79,3 +79,32 @@ FROM Clientes
 ORDER BY ciudad ASC, nombre ASC;
 GO
 
+-- Consulta 5.1: Contar cuántos clientes tenemos registrados por cada ciudad
+-- COUNT(*) devuelve el número total de registros dentro de cada grupo.
+SELECT ciudad, COUNT(*) AS cantidad_clientes
+FROM Clientes
+GROUP BY ciudad;
+GO
+-- Consulta 5.2: Calcular la suma total acumulada y el promedio de ventas por cliente
+-- SUM obtiene el total acumulado y AVG calcula el promedio aritmético de los montos.
+SELECT id_cliente,
+SUM(monto) AS total_gastado,
+AVG(monto) AS promedio_por_pedido
+FROM Pedidos
+GROUP BY id_cliente;
+GO
+
+-- =================================================================
+-- PASO 6: COMBINACIÓN DE TABLAS (INNER JOIN)
+-- =================================================================
+-- Consulta 6.1: Mostrar los pedidos integrando el nombre real del cliente
+-- Usamos alias para las tablas (C para Clientes, P para Pedidos) para escribir código más limpio
+SELECT P.id_pedido,
+C.nombre AS nombre_cliente,
+P.fecha,
+P.monto
+FROM Pedidos AS P
+INNER JOIN Clientes AS C
+ON P.id_cliente = C.id_cliente;
+GO
+
